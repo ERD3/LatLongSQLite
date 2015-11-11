@@ -1,6 +1,8 @@
 package com.example.eugene.latlongsqlite;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -122,6 +124,35 @@ public class ViewLocationActivity extends AppCompatActivity implements View.OnCl
         c.moveToPosition(Integer.parseInt(locid));
     }
 
+    private void deleteRecord(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("Are you sure you want to delete this location?");
+
+        alertDialogBuilder.setPositiveButton("Yes",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String locid = textViewID.getText().toString().trim();
+
+                        String sql = "DELETE FROM location WHERE locationid=" + locid + ";";
+                        db.execSQL(sql);
+                        Toast.makeText(getApplicationContext(), "Location Deleted", Toast.LENGTH_LONG).show();
+                        c = db.rawQuery(SELECT_SQL, null);
+                        c.moveToPosition(Integer.parseInt(locid));
+                    }
+                });
+        alertDialogBuilder.setNegativeButton("No",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -163,6 +194,10 @@ public class ViewLocationActivity extends AppCompatActivity implements View.OnCl
 
         if (v == btnReturn){
             onBackPressed();
+        }
+
+        if (v == buttonDelete){
+            deleteRecord();
         }
 
     }
