@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">LatLongSQLite</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_exit">Exit</string>
+    <string name="buttonView">VIEW GPS LOCATION</string>
+    <string name="buttonAdd">ADD</string>
+    <string name="Latitude">Latitude</string>
+    <string name="Longitude">Longitude</string>
+    <string name="title_activity_view_location">ViewLocationActivity</string>
+    <string name="locationID">LocationID</string>
+    <string name="buttonReturn">Return</string>
+    <string name="buttonPrevious">PREVIOUS</string>
+    <string name="buttonSave">SAVE</string>
+    <string name="buttonNext">NEXT</string>
+    <string name="buttonDelete">DELETE</string>
+</resources>
