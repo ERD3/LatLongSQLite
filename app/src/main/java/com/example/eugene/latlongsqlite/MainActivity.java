@@ -39,10 +39,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editTextLong = (EditText) findViewById(R.id.editTextLong);
 
         btnAdd = (Button) findViewById(R.id.buttonAdd);
-        btnView = (Button) findViewById(R.id.viewButton);
+
 
         btnAdd.setOnClickListener(this);
-        btnView.setOnClickListener(this);
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -59,13 +59,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(intent);
 
     }
-    //Method to create database called CabLocationDB
-    protected void createDatabase(){
-        db=openOrCreateDatabase("CabLocationDB", Context.MODE_PRIVATE, null);
-        //Creates table called location only if it doesn't exists and the following fields (locationid, latgps and longgps)
-        db.execSQL("CREATE TABLE IF NOT EXISTS location(locationid INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, latgps REAL, longgps REAL);");
+    private void showMap() {
+        Intent intent = new Intent(this,MapsActivity.class);
+        startActivity(intent);
     }
-    //Method to write to database
+
+    //Method to create database called CabLocationDB
+    protected void createDatabase() {
+        db = openOrCreateDatabase("CabLocationDB", Context.MODE_PRIVATE, null);
+        //Creates table called location only if it doesn't exists and the following fields (locationid, latgps and longgps)
+        db.execSQL("CREATE TABLE IF NOT EXISTS location(locationid INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, date, time, latgps REAL, longgps REAL);");    //Method to write to database
+    }
     protected void insertIntoDB(){
         String lat = editTextLat.getText().toString().trim();
         String lon = editTextLong.getText().toString().trim();
@@ -81,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textClearField();
 
     }
-    protected void textClearField (){
+    protected void textClearField(){
         editTextLat.setText("");
         editTextLong.setText("");
     }
@@ -103,6 +107,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (id == R.id.action_settings) {
             return true;
         }
+        if (id == R.id.action_db){
+            showLocation();
+        }
+        if (id == R.id.action_map){
+            showMap();
+        }
         if (id == R.id.action_exit) {
             this.finish();
         }
@@ -115,9 +125,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (v == btnAdd) {
             insertIntoDB();
         }
-        if (v == btnView){
-            showLocation();
-        }
+
     }
 
 }

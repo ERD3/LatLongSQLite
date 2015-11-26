@@ -16,7 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -25,6 +24,8 @@ public class ViewLocationActivity extends AppCompatActivity implements View.OnCl
     private EditText textViewID;
     private EditText textViewLat;
     private EditText textViewLong;
+    private EditText textViewTime;
+    private EditText textViewDate;
     private Button buttonPrevious;
     private Button buttonSave;
     private Button buttonNext;
@@ -49,6 +50,8 @@ public class ViewLocationActivity extends AppCompatActivity implements View.OnCl
 
         textViewID = (EditText) findViewById(R.id.textViewID);
         textViewLat = (EditText) findViewById(R.id.textViewLat);
+        //textViewDate = (EditText) findViewById(R.id.textViewDate);
+        //textViewTime = (EditText) findViewById(R.id.textViewTime);
         textViewLong = (EditText) findViewById(R.id.textViewLong);
 
         buttonPrevious = (Button) findViewById(R.id.buttonPrevious);
@@ -85,9 +88,14 @@ public class ViewLocationActivity extends AppCompatActivity implements View.OnCl
 
     protected void showRecords() {
         String locid = c.getString(0);
-        String lat = c.getString(1);
-        String lon = c.getString(2);
+        String date = c.getString(1);
+        String time = c.getString(2);
+        String lat = c.getString(3);
+        String lon = c.getString(4);
+
         textViewID.setText(locid);
+        textViewDate.setText(date);
+        textViewTime.setText(time);
         textViewLat.setText(lat);
         textViewLong.setText(lon);
     }
@@ -108,12 +116,14 @@ public class ViewLocationActivity extends AppCompatActivity implements View.OnCl
 
     protected void savelocation(){
         String locid = textViewID.getText().toString().trim();
+        String date = textViewDate.getText().toString().trim();
+        String time = textViewTime.getText().toString().trim();
         String lat = textViewLat.getText().toString().trim();
         String lon = textViewLong.getText().toString().trim();
 
-        String sql = "UPDATE location SET latgps='" +lat + "', longgps='" + lon + "' WHERE locationid=" +locid + ";";
+        String sql = "UPDATE location SET date='"+date +"', time='"+ time +"', latgps='" + lat + "', longgps='" + lon + "' WHERE locationid=" +locid + ";";
 
-        if (lat.isEmpty() || lon.isEmpty()){
+        if (lat.isEmpty() || lon.isEmpty() || date.isEmpty() || time.isEmpty()) {
             Toast.makeText(getApplicationContext(), "You cannot save blank values", Toast.LENGTH_LONG).show();
             return;
         }
@@ -152,6 +162,10 @@ public class ViewLocationActivity extends AppCompatActivity implements View.OnCl
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
+    private void showMap() {
+        Intent intent = new Intent(this,MapsActivity.class);
+        startActivity(intent);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -170,6 +184,10 @@ public class ViewLocationActivity extends AppCompatActivity implements View.OnCl
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }
+        if (id == R.id.action_map){
+            showMap();
+
         }
         if (id == R.id.action_exit) {
             onBackPressed();
