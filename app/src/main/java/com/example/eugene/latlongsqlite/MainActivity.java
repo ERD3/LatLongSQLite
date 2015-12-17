@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void createDatabase() {
         db = openOrCreateDatabase("CabLocationDB", Context.MODE_PRIVATE, null);
         //Creates table called location only if it doesn't exists and the following fields (locationid, latgps and longgps)
-        db.execSQL("CREATE TABLE IF NOT EXISTS location(locationid INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, date, time, latgps REAL, longgps REAL);");    //Method to write to database
+        db.execSQL("CREATE TABLE IF NOT EXISTS location(locationid INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,t REAL, d REAL, latgps REAL, longgps REAL);");    //Method to write to database
     }
     protected void insertIntoDB(){
         String lat = editTextLat.getText().toString().trim();

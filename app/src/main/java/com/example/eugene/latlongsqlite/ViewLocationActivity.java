@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -25,7 +26,7 @@ public class ViewLocationActivity extends AppCompatActivity implements View.OnCl
     private EditText textViewLat;
     private EditText textViewLong;
     private EditText textViewTime;
-    private EditText textViewDate;
+    private TextView textViewDate;
     private Button buttonPrevious;
     private Button buttonSave;
     private Button buttonNext;
@@ -50,8 +51,8 @@ public class ViewLocationActivity extends AppCompatActivity implements View.OnCl
 
         textViewID = (EditText) findViewById(R.id.textViewID);
         textViewLat = (EditText) findViewById(R.id.textViewLat);
-        //textViewDate = (EditText) findViewById(R.id.textViewDate);
-        //textViewTime = (EditText) findViewById(R.id.textViewTime);
+        textViewDate = (EditText) findViewById(R.id.editTextDate);
+        textViewTime = (EditText) findViewById(R.id.editTextTime);
         textViewLong = (EditText) findViewById(R.id.textViewLong);
 
         buttonPrevious = (Button) findViewById(R.id.buttonPrevious);
@@ -121,9 +122,9 @@ public class ViewLocationActivity extends AppCompatActivity implements View.OnCl
         String lat = textViewLat.getText().toString().trim();
         String lon = textViewLong.getText().toString().trim();
 
-        String sql = "UPDATE location SET date='"+date +"', time='"+ time +"', latgps='" + lat + "', longgps='" + lon + "' WHERE locationid=" +locid + ";";
+        String sql = "UPDATE location SET latgps='" + lat + "', longgps='" + lon + "' WHERE locationid=" +locid + ";";
 
-        if (lat.isEmpty() || lon.isEmpty() || date.isEmpty() || time.isEmpty()) {
+        if (lat.isEmpty() || lon.isEmpty()) {
             Toast.makeText(getApplicationContext(), "You cannot save blank values", Toast.LENGTH_LONG).show();
             return;
         }

@@ -143,7 +143,9 @@ public class MapsActivity extends FragmentActivity implements
         mCurrentLocation = location;
         mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
         addMarker();
+        setDate();
         updateDatabase();
+        setDate();
         //mapPath();
     }
 
@@ -200,7 +202,7 @@ public class MapsActivity extends FragmentActivity implements
     protected void createDatabase() {
         db = openOrCreateDatabase("CabLocationDB", Context.MODE_PRIVATE, null);
         //Creates table called location only if it doesn't exists and the following fields (locationid, latgps and longgps)
-        db.execSQL("CREATE TABLE IF NOT EXISTS location(locationid INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, date, time, latgps REAL, longgps REAL);");
+        db.execSQL("CREATE TABLE IF NOT EXISTS location(locationid INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, t REAL, latgps REAL, longgps REAL);");
 
     }
 
@@ -210,7 +212,7 @@ public class MapsActivity extends FragmentActivity implements
         String date = mDate;
         String time = mLastUpdateTime;
 
-        String query = "INSERT INTO location (date, time, latgps, longgps) VALUES('"+date+"', '"+time+"', '"+lat+"', '"+lon+"');";
+        String query = "INSERT INTO location (t, d, latgps, longgps) VALUES('"+date+"', '"+time+"', '"+lat+"', '"+lon+"');";
         db.execSQL(query);
 
     }
